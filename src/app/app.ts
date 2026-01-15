@@ -22,12 +22,19 @@ app.use('/api/v1', studentRouter);
 
 
 
-userRouter.get('/users', (req:Request, res:Response)=>{
+    userRouter.get('/users', (req:Request, res:Response, next:NextFunction)=>{
 
-    console.log('user router called')
 
-    res.send('user list')
-})
+        try{
+            res.send(sdfasdfasdf)
+        }catch(err){
+
+            next(err)
+        }
+    
+
+    
+    })
 
 studentRouter.get('/students', (req:Request, res:Response)=>{
     try{
@@ -68,6 +75,34 @@ app.get('/user', loggerMiddleware, (req:Request, res:Response)=>{
 app.get('/', (req :Request, res:Response) => {
     res.send('Hello, World! this is my frist express and type script server');
 });
+
+
+
+
+
+
+
+
+// 404 handler – MUST be last
+app.use((req: Request, res: Response) => {
+  res.status(404).json({
+    success: false,
+    message: "Route not found",
+  });
+});
+
+
+//global error handler
+
+app.use((err:Error, req:Request, res:Response, next:NextFunction)=>{
+
+
+    res.status(500).send('something went wrong')
+
+});
+
+
+
 
 
 

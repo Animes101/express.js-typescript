@@ -12,9 +12,13 @@ const userRouter = express_1.default.Router();
 const studentRouter = express_1.default.Router();
 app.use('/api/v1', userRouter);
 app.use('/api/v1', studentRouter);
-userRouter.get('/users', (req, res) => {
-    console.log('user router called');
-    res.send('user list');
+userRouter.get('/users', (req, res, next) => {
+    try {
+        res.send(sdfasdfasdf);
+    }
+    catch (err) {
+        next(err);
+    }
 });
 studentRouter.get('/students', (req, res) => {
     try {
@@ -36,5 +40,16 @@ app.get('/user', loggerMiddleware, (req, res) => {
 });
 app.get('/', (req, res) => {
     res.send('Hello, World! this is my frist express and type script server');
+});
+// 404 handler – MUST be last
+app.use((req, res) => {
+    res.status(404).json({
+        success: false,
+        message: "Route not found",
+    });
+});
+//global error handler
+app.use((err, req, res, next) => {
+    res.status(500).send('something went wrong');
 });
 exports.default = app;
